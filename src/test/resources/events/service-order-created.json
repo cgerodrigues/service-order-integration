@@ -1,0 +1,36 @@
+{
+  "specversion": "1.0",
+  "id": "event-1",
+  "source": "urn:enterprise:service-orders",
+  "type": "com.cgerodrigues.serviceorder.created.v1",
+  "subject": "order-1",
+  "time": "2026-10-12T10:00:00Z",
+  "datacontenttype": "application/json",
+  "correlationid": "flow-1",
+  "data": {
+    "id": "order-1",
+    "name": "Install connection",
+    "type": "INSTALLATION",
+    "description": "Install the requested connection",
+    "customer": {
+      "id": "customer-1",
+      "name": "Alex Smith"
+    },
+    "serviceAddress": {
+      "street": "Main Street",
+      "number": "10",
+      "complement": "Apartment 2",
+      "district": "Centro",
+      "city": "Fortaleza",
+      "state": "CE",
+      "postalCode": "60000-000",
+      "country": "BR"
+    },
+    "priority": "NORMAL",
+    "requestedWindow": {
+      "start": "2026-10-12T09:00:00-03:00",
+      "end": "2026-10-12T11:00:00-03:00"
+    },
+    "notes": "Call on arrival"
+  }
+}

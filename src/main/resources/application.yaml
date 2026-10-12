@@ -1,3 +1,57 @@
 spring:
   application:
     name: service-order-integration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:service-order-integration}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        max.block.ms: 10000
+        request.timeout.ms: 10000
+        delivery.timeout.ms: 20000
+    listener:
+      ack-mode: record
+      observation-enabled: true
+    template:
+      observation-enabled: true
+  http:
+    clients:
+      connect-timeout: 3s
+      read-timeout: 10s
+
+integration:
+  kafka:
+    inbound-topic: ${SERVICE_ORDER_CREATED_TOPIC:service-order.created}
+    success-topic: ${SERVICE_ORDER_SYNCHRONIZED_TOPIC:service-order.synchronized}
+  field-service:
+    base-url: ${FIELD_SERVICE_BASE_URL:http://localhost:8081}
+
+management:
+  tracing:
+    sampling:
+      probability: ${TRACING_SAMPLING_PROBABILITY:1.0}
+    propagation:
+      type: w3c
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTLP_ENDPOINT:http://localhost:4318}/v1/traces
+  otlp:
+    metrics:
+      export:
+        url: ${OTLP_ENDPOINT:http://localhost:4318}/v1/metrics
+
+logging:
+  structured:
+    format:
+      console: logstash

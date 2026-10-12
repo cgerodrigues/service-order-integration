@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/service-orders",
+    "bodyPatterns": [{"matchesJsonPath": "$.serviceOrderId"}]
+  },
+  "response": {
+    "status": 201,
+    "headers": {"Content-Type": "application/json"},
+    "jsonBody": {"externalOrderId": "fs-{{jsonPath request.body '$.serviceOrderId'}}"}
+  }
+}
